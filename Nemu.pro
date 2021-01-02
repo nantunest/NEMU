@@ -15,7 +15,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        adc.cpp \
+        addressingmode.cpp \
+        cmp.cpp \
+        cpu6502.cpp \
+        immediate.cpp \
         instruction.cpp \
+        instructionfactory.cpp \
         main.cpp
 
 # Default rules for deployment.
@@ -24,4 +30,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    instruction.h
+    adc.h \
+    addressingmode.h \
+    cmp.h \
+    cpu6502.h \
+    cpu6502types.h \
+    immediate.h \
+    instruction.h \
+    instructionfactory.h
