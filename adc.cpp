@@ -4,6 +4,7 @@
 #include <QVector>
 #include <Cpu6502Types.h>
 #include <instructionfactory.h>
+#include <statusregister.h>
 
 namespace {
     Instruction * CreateADCImmediate() {
@@ -23,17 +24,69 @@ void ADC::execute(CpuState &cpuState)
 {
     QVector<quint8> &opers = m_addressingMode->fetchOperands(cpuState);
 
-    quint16 sum = cpuState.A + opers[0];
+    // Preliminary result of the addition
+    quint8 prevAcc = cpuState.accumulator();
+    quint16 sum = cpuState.accumulator() + opers[0];
 
-    if (sum > 255)
+    // Check the carry flag
+    if (true == cpuState.status_register().carry_flag())
     {
-        cpuState.A = sum % 256;
-        cpuState.status_register[StatusRegisterBitNames::kCarryFlag] = true;
+        // Carry flag set -> add 1 to the result
+        sum += 1;
+    }
+
+    if (true == cpuState.status_register().decimal_mode())
+    {
+        // CPU in decimal mode, test carry against 100 result
+
+        if (sum >= 100)
+        {
+            cpuState.accumulator(sum % 100);
+            cpuState.status_register().carry_flag(true);
+        }
+        else
+        {
+            cpuState.accumulator(sum);
+            cpuState.status_register().carry_flag(false);
+        }
     }
     else
     {
-        cpuState.A = sum;
-        cpuState.status_register[StatusRegisterBitNames::kCarryFlag] = false;
+        // CPU in binary mode, test carry against 256 result
+
+        if (sum >= 256)
+        {
+            cpuState.accumulator(sum % 256);
+            cpuState.status_register().carry_flag(true);
+        }
+        else
+        {
+            cpuState.accumulator(sum);
+            cpuState.status_register().carry_flag(false);
+        }
+    }
+
+    // test if negative
+
+    if (0 > static_cast<qint8>(cpuState.accumulator()))
+    {
+        cpuState.status_register().negative_flag(true);
+    }
+    else
+    {
+        cpuState.status_register().negative_flag(false);
+    }
+
+    // test if overflow (effectivelly if 7th bit flipped)
+
+    if ( (prevAcc <= 127 && cpuState.accumulator() > 127)
+       ||(prevAcc > 127  && cpuState.accumulator() < 255) )
+    {
+        cpuState.status_register().overflow_flag(true);
+    }
+    else
+    {
+        cpuState.status_register().overflow_flag(false);
     }
 }
 

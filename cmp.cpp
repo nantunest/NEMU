@@ -17,25 +17,25 @@ void CMP::execute(CpuState &cpuState)
 {
     QVector<quint8> &opers = m_addressingMode->fetchOperands(cpuState);
 
-    qint8 res = cpuState.A - opers[0];
+    qint8 res = cpuState.accumulator() - opers[0];
 
     if (0 == res)
     {
-        cpuState.status_register[StatusRegisterBitNames::kZeroFlag] = true;
-        cpuState.status_register[StatusRegisterBitNames::kNegativeFlag] = false;
-        cpuState.status_register[StatusRegisterBitNames::kCarryFlag] = true;
+        cpuState.status_register().zero_flag(true);
+        cpuState.status_register().negative_flag(false);
+        cpuState.status_register().carry_flag(true);
     }
     else if (0 > res)
     {
-        cpuState.status_register[StatusRegisterBitNames::kZeroFlag] = false;
-        cpuState.status_register[StatusRegisterBitNames::kNegativeFlag] = true;
-        cpuState.status_register[StatusRegisterBitNames::kCarryFlag] = false;
+        cpuState.status_register().zero_flag(false);
+        cpuState.status_register().negative_flag(true);
+        cpuState.status_register().carry_flag(false);
     }
     else
     {
-        cpuState.status_register[StatusRegisterBitNames::kZeroFlag] = false;
-        cpuState.status_register[StatusRegisterBitNames::kNegativeFlag] = false;
-        cpuState.status_register[StatusRegisterBitNames::kCarryFlag] = true;
+        cpuState.status_register().zero_flag(false);
+        cpuState.status_register().negative_flag(false);
+        cpuState.status_register().carry_flag(true);
     }
 
 }

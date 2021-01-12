@@ -15,17 +15,6 @@ enum StatusRegisterBitNames{
     kNegativeFlag = 7
 };
 
-struct CpuState {
-    quint16 PC;                // Program Counter
-    quint8 SP;                 // Stack Pointer
-    quint8 A;                  // Accumulator
-    quint8 X;                  // Index Register X
-    quint8 Y;                  // Index Register Y
-    bool status_register[8];
-
-    QVector<quint8> progMemory;
-};
-
 namespace opcodes {
     enum immediate {
         ADC = 0x69, // Adds the immediate to the accumulator
@@ -43,7 +32,7 @@ enum class OpCodes
 
 struct LoadingHeader {
     quint16 position;
-    QVector<quint8> &progMemory;
+    const QVector<quint8> &progMemory;
 };
 
 #endif // CPU6502TYPES_H

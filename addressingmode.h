@@ -4,6 +4,8 @@
 #include <QVector>
 #include <cpu6502types.h>
 
+#include <cpustate.h>
+
 class AddressingMode
 {
 public:

@@ -6,6 +6,7 @@
 #include <QMap>
 
 #include <addressingmode.h>
+#include <cpustate.h>
 
 /*#
  * \class Instruction

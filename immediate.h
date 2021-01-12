@@ -4,6 +4,8 @@
 #include <QTypeInfo>
 #include <addressingmode.h>
 
+#include <cpustate.h>
+
 class Immediate : public AddressingMode
 {
 public:

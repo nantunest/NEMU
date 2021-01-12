@@ -1,7 +1,8 @@
 #ifndef CMP_H
 #define CMP_H
 
-#include "instruction.h"
+#include <instruction.h>
+#include <cpustate.h>
 
 /*#
  * \brief Class to implement the instruction CMP of the 6062.

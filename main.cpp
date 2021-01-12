@@ -7,17 +7,17 @@
 int main(int argc, char *argv[])
 {
 
-    CpuState cpu = {0};
+    CpuState cpu;
 
-    cpu.progMemory.reserve(10);
+    cpu.prog_memory().reserve(10);
 
-    cpu.progMemory.append(0x69);
+    cpu.prog_memory().append(0x69);
 
-    cpu.progMemory.append(0x1E);
+    cpu.prog_memory().append(0x1E);
 
     Instruction * inst = InstructionFactory::Create(OpCodes::ADCi);
 
-    LoadingHeader lh = {0, cpu.progMemory};
+    LoadingHeader lh = {0, static_cast<const QVector<quint8> >(cpu.prog_memory())};
 
     inst->setup(lh);
 

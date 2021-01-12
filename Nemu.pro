@@ -19,10 +19,12 @@ SOURCES += \
         addressingmode.cpp \
         cmp.cpp \
         cpu6502.cpp \
+        cpustate.cpp \
         immediate.cpp \
         instruction.cpp \
         instructionfactory.cpp \
-        main.cpp
+        main.cpp \
+        statusregister.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -35,6 +37,8 @@ HEADERS += \
     cmp.h \
     cpu6502.h \
     cpu6502types.h \
+    cpustate.h \
     immediate.h \
     instruction.h \
-    instructionfactory.h
+    instructionfactory.h \
+    statusregister.h
