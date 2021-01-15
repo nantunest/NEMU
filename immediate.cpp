@@ -6,11 +6,6 @@ Immediate::Immediate()
 
 }
 
-QVector<quint8> &Immediate::fetchOperands(CpuState &cpuState)
-{
-    return m_operands;
-}
-
 QVector<quint8> Immediate::operands() const
 {
     return m_operands;

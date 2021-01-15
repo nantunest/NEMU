@@ -11,8 +11,6 @@ class Immediate : public AddressingMode
 public:
     Immediate();
 
-    virtual QVector<quint8> &fetchOperands(CpuState &cpuState);
-
     QVector<quint8> operands() const;
 
     void setup(LoadingHeader &loadingHeader);

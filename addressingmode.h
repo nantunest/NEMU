@@ -11,9 +11,12 @@ class AddressingMode
 public:
     AddressingMode();
 
-    virtual QVector<quint8>& fetchOperands(CpuState &cpuState) = 0;
+    virtual QVector<quint8>& fetchOperands(CpuState &cpuState);
 
     virtual void setup(LoadingHeader &loadingHeader) = 0;
+
+protected:
+        QVector<quint8> m_operands;
 
 };
 
